@@ -1,0 +1,9 @@
+{
+    "name": "ckassa/ckassa-sdk-php",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ckassa\\": "lib/"
+        }
+    }
+}
