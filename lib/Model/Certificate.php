@@ -20,6 +20,7 @@ class Certificate
     public function __construct($certPath, $certPassword)
     {
         $this->path = $certPath;
+        $this->password = $certPassword;
         if (file_exists($this->path) === false) {
             throw new \Exception('Certificate file doesn\'t exist');
         }
