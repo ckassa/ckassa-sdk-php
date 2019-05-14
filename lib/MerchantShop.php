@@ -2,10 +2,36 @@
 namespace Ckassa;
 
 use Ckassa\Helpers\DataHelper;
+use Ckassa\Model\BaseShop;
+use Ckassa\Model\Merchant;
 
-class MerchantShop extends Shop
+class MerchantShop extends BaseShop
 {
     public $url = 'https://api.autopays.ru/api-shop/rs/merchant/';
+
+    public function createMerchant(array $params)
+    {
+        $path = $this->url . '/registration/merchant';
+        return new Merchant($this->sendRequest($path, $this->prepareCreateMerchantData($params)));
+    }
+
+    public function createPayment(array $params)
+    {
+        $path = $this->url . '/do/payment';
+        return $this->sendRequest($path, $this->prepareCreatePaymentData($params));
+    }
+
+    public function getBalance(string $merchantToken)
+    {
+        $path = $this->url . '/get/merchant/wallet/balance';
+        return $this->sendRequest($path, ['merchantToken' => $merchantToken]);
+    }
+
+    public function loadMerchant(string $login)
+    {
+        $path = $this->url . '/merchant/status';
+        return new Merchant($this->sendRequest($path, ['login' => $login]));
+    }
 
     private function prepareCreateMerchantData($data)
     {
@@ -27,9 +53,25 @@ class MerchantShop extends Shop
         return $data;
     }
 
-    public function createMerchant(array $params)
+    private function prepareCreatePaymentData($data)
     {
-        $path = $this->url . '/registration/merchant';
-        return $this->sendRequest($path, $this->prepareCreateMerchantData($params));
+        return DataHelper::transfigureData([
+            'serviceCode',
+            'amount',
+            'comission',
+            'orderId',
+            'description',
+            'userToken',
+            'cardToken',
+            'gPayToken',
+            'enableSMSConfirm',
+            'merchantToken',
+            'callName',
+            'extraPhone',
+            'holdTtl',
+            'payType',
+            'userEmail',
+            'fiscalType'
+        ], $data);
     }
 }

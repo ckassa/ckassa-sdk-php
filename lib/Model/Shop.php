@@ -1,10 +1,8 @@
 <?php
-namespace Ckassa;
+namespace Ckassa\Model;
 
 use Ckassa\Exceptions\ApiException;
 use Ckassa\Exceptions\ConnectionException;
-use Ckassa\Model\Certificate;
-use Ckassa\Model\Response;
 
 /**
  * Class Shop
@@ -13,9 +11,9 @@ use Ckassa\Model\Response;
  */
 class Shop
 {
-    private $key;
-    private $token;
-    private $certificate;
+    protected $key;
+    protected $token;
+    protected $certificate;
 
     public function __construct($key, $token, $certPath, $certPassword)
     {
@@ -53,17 +51,20 @@ class Shop
         curl_setopt( $ch, CURLOPT_SSLCERTPASSWD, $this->certificate->password);
         curl_setopt( $ch, CURLOPT_SSLKEY, $this->certificate->path);
         curl_setopt( $ch, CURLOPT_SSLKEYPASSWD, $this->certificate->password);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
         $response = new Response(curl_exec($ch));
-        if ($error = curl_error($ch)) {
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        if ($error) {
             throw new ConnectionException($error);
         }
-        curl_close($ch);
 
         if ($code = $response->getCode())
         {
             throw new ApiException($response->getUserMessage(), $code);
         }
 
-        return $response->getBody();
+        return json_decode($response->getBody(), true);
     }
 }
