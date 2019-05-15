@@ -6,7 +6,7 @@
 #### Через Composer
 Выполните команду
 
-`composer require yandex-money/yandex-checkout-sdk-php`
+`composer require ckassa/ckassa-sdk-php`
 
 Или добавьте 
 
