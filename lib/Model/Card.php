@@ -3,100 +3,127 @@ namespace Ckassa\Model;
 
 use Ckassa\Exceptions\ApiException;
 
+/**
+ * Платежная карта
+ *
+ * @property string $cardMask Маскированый номер карты
+ * @property string $exp Время действия в формате MMyyyy
+ * @property string $cardToken Токен (используется для создания рекуррентного платежа, активации карты)
+ * @property string $cardType Тип карты
+ *
+ * @package Ckassa\Model
+ */
 class Card
 {
-    const TYPES = ['web', 'mobile'];
+    const CARD_TYPES = ['undefined', 'visa', 'master_card', 'maestro', 'mir'];
 
-    private $clientType;
-    private $clientInfo;
-    private $regPayNum;
-    private $methodType;
-    private $userToken;
-    private $payUrl;
+    /**
+     * @var string Маскированый номер
+     */
+    private $cardMask;
 
+    /**
+     * @var string Время действия
+     */
+    private $exp;
+
+    /**
+     * @var string Токен
+     */
+    private $cardToken;
+
+    /**
+     * @var string Тип карты
+     */
+    private $cardType;
+
+    /**
+     * Card constructor.
+     * @param array $cardInfo
+     */
     public function __construct(array $cardInfo)
     {
-        if (isset($cardInfo['clientType'])) {
-            $this->setClientType($cardInfo['clientType']);
+        if (isset($cardInfo['cardMask'])) {
+            $this->setCardMask($cardInfo['cardMask']);
         }
-        if (isset($cardInfo['clientInfo'])) {
-            $this->setClientInfo($cardInfo['clientInfo']);
+        if (isset($cardInfo['exp'])) {
+            $this->setExp($cardInfo['exp']);
         }
-        if (isset($cardInfo['regPayNum'])) {
-            $this->setRegPayNum($cardInfo['regPayNum']);
+        if (isset($cardInfo['cardToken'])) {
+            $this->setCardToken($cardInfo['cardToken']);
         }
-        if (isset($cardInfo['methodType'])) {
-            $this->setMethodType($cardInfo['methodType']);
-        }
-        if (isset($cardInfo['userToken'])) {
-            $this->setUserToken($cardInfo['userToken']);
-        }
-        if (isset($cardInfo['payUrl'])) {
-            $this->setPayUrl($cardInfo['payUrl']);
+        if (isset($cardInfo['cardType'])) {
+            $this->setCardType($cardInfo['cardType']);
         }
     }
 
-    public function getClientInfo()
+    /**
+     * @return string
+     */
+    public function getCardMask()
     {
-        return $this->clientInfo;
+        return $this->cardMask;
     }
 
-    public function setClientInfo($value)
+    /**
+     * @param $value
+     */
+    public function setCardMask($value)
     {
-        $this->clientInfo = (string)$value;
+        $this->cardMask = (string)$value;
     }
 
-    public function getClientType()
+    /**
+     * @return string
+     */
+    public function getExp()
     {
-        return $this->clientType;
+        return $this->exp;
     }
 
-    public function setClientType($value)
+    /**
+     * @param $value
+     */
+    public function setExp($value)
     {
-        if (in_array($value, self::TYPES)) {
-            $this->clientType = $value;
+        $this->exp = (string)$value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCardToken()
+    {
+        return $this->cardToken;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setCardToken($value)
+    {
+        $this->cardToken = (string)$value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCardType()
+    {
+        return $this->cardType;
+    }
+
+    /**
+     * @param $value
+     *
+     * @throws ApiException
+     */
+    public function setCardType($value)
+    {
+        if (in_array($value, self::CARD_TYPES)) {
+            $this->cardType = $value;
         } else {
-            throw new ApiException('Invalid client type');
+            throw new ApiException('Invalid card type');
         }
-    }
-
-    public function getMethodType()
-    {
-        return $this->methodType;
-    }
-
-    public function setMethodType($value)
-    {
-        $this->methodType = (string)$value;
-    }
-
-    public function getPayUrl()
-    {
-        return $this->payUrl;
-    }
-
-    public function setPayUrl($value)
-    {
-        $this->payUrl = (string)$value;
-    }
-
-    public function getRegPayNum()
-    {
-        return $this->regPayNum;
-    }
-
-    public function setRegPayNum($value)
-    {
-        $this->regPayNum = (string)$value;
-    }
-
-    public function getUserToken()
-    {
-        return $this->userToken;
-    }
-
-    public function setUserToken($value)
-    {
-        $this->userToken = (string)$value;
     }
 }

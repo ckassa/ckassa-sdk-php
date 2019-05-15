@@ -5,16 +5,38 @@ use Ckassa\Exceptions\ApiException;
 use Ckassa\Exceptions\ConnectionException;
 
 /**
- * Class Shop
+ * Базовые операции с API
+ *
+ * @property string $key Секретный ключ
+ * @property string $token  Токен организации
+ * @property Certificate $certificate Сертификат
+ *
  * @package Ckassa
- * @param $certificate Certificate
  */
 class Shop
 {
+    /**
+     * @var string Секретный ключ
+     */
     protected $key;
+
+    /**
+     * @var string Токен организации
+     */
     protected $token;
+
+    /**
+     * @var Certificate Сертификат для подписи
+     */
     protected $certificate;
 
+    /**
+     * Shop constructor.
+     * @param $key
+     * @param $token
+     * @param $certPath
+     * @param $certPassword
+     */
     public function __construct($key, $token, $certPath, $certPassword)
     {
         $this->key = $key;
@@ -51,7 +73,7 @@ class Shop
         curl_setopt( $ch, CURLOPT_SSLCERTPASSWD, $this->certificate->password);
         curl_setopt( $ch, CURLOPT_SSLKEY, $this->certificate->path);
         curl_setopt( $ch, CURLOPT_SSLKEYPASSWD, $this->certificate->password);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        //curl_setopt($ch, CURLOPT_FAILONERROR, true);
         $response = new Response(curl_exec($ch));
         $error = curl_error($ch);
         curl_close($ch);
