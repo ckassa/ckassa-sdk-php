@@ -1,12 +1,12 @@
 # Ckassa ShopAPI PHP SDK
 Клиент для работы с <a href="https://cabinet.ckassa.ru/doc">Ckassa ShopAPI</a>
 
-###Установка
+### Установка
 
-####Через Composer
+#### Через Composer
 Выполните команду
 
-`composer require yandex-money/yandex-checkout-sdk-php`
+`composer require ckassa/ckassa-sdk-php`
 
 Или добавьте 
 
@@ -14,14 +14,14 @@
 
 в секцию require вашего файла `composer.json`
 
-####Вручную
+#### Вручную
 Скачайте архив проекта и поместите содержимое каталога lib в ваш проект
 Подключте автозагрузку SDK
 
 `require __DIR__ . '/autoload.php'; `
 
 
-###Использование
+### Использование
 ```php
 $shop = new MerchantShop($key, $token, $certPath, $certPassword);
 $shop->createMerchant([
