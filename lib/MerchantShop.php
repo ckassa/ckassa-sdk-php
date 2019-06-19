@@ -15,7 +15,7 @@ use Ckassa\Model\Payment;
  */
 class MerchantShop extends BaseShop
 {
-    public $url = 'https://api.autopays.ru/api-shop/rs/merchant/';
+    public $url = 'https://api.autopays.ru/api-shop/rs/merchant';
 
     /**
      * Регистрация мерчанта

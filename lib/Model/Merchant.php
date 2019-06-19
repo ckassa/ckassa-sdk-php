@@ -29,9 +29,9 @@ class Merchant
 
     /**
      * Merchant constructor.
-     * @param array $merchantInfo
+     * @param $merchantInfo
      */
-    public function __construct(array $merchantInfo)
+    public function __construct($merchantInfo)
     {
         if (isset($merchantInfo['phone'])) {
             $this->setPhone($merchantInfo['phone']);

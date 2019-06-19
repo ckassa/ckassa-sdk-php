@@ -12,9 +12,7 @@ use Ckassa\Helpers\DataHelper;
  */
 class BaseShop extends Shop
 {
-    const URL = 'https://tst.autopays.ru/api-shop';
-    //public $url = 'https://api.autopays.ru/api-shop';
-    public $url = 'https://tst.autopays.ru/api-shop';
+    public $baseUrl = 'https://api.autopays.ru/api-shop';
 
     /**
      * Подтверждение оказания услуги/заморозки
@@ -29,7 +27,7 @@ class BaseShop extends Shop
      */
     public function confirmPayment(string $regPayNum, string $orderId, int $amount = 0)
     {
-        $path = self::URL . '/provision-services/confirm';
+        $path = $this->baseUrl . '/provision-services/confirm';
         return $this->sendRequest($path, [
             'regPayNum' => $regPayNum,
             'orderId' => $orderId,
@@ -48,7 +46,7 @@ class BaseShop extends Shop
      */
     public function createCard(array $params)
     {
-        $path = self::URL . '/card/registration';
+        $path = $this->baseUrl . '/card/registration';
         $params = DataHelper::transfigureData([
             'clientType',
             'userToken',
@@ -69,7 +67,7 @@ class BaseShop extends Shop
      */
     public function createUser(array $params)
     {
-        $path = self::URL . '/user/registration';
+        $path = $this->baseUrl . '/user/registration';
         $params = DataHelper::transfigureData([
             'login',
             'email',
@@ -93,7 +91,7 @@ class BaseShop extends Shop
      */
     public function deactivateCard(string $userToken, string $cardToken)
     {
-        $path = self::URL . '/card/deactivation/';
+        $path = $this->baseUrl . '/card/deactivation/';
         return $this->sendRequest($path, ['userToken' => $userToken, 'cardToken' => $cardToken]);
     }
 
@@ -108,7 +106,7 @@ class BaseShop extends Shop
      */
     public function getCardsList(string $userToken)
     {
-        $path = self::URL . '/ver2/get/cards';
+        $path = $this->baseUrl . '/ver2/get/cards';
         $result = $this->sendRequest($path, ['userToken' => $userToken]);
         $cards = [];
         if (isset($result['cards'])) {
@@ -130,7 +128,7 @@ class BaseShop extends Shop
      */
     public function getPaymentInfo(string $regPayNum)
     {
-        $path = self::URL . '/check/payment/state';
+        $path = $this->baseUrl . '/check/payment/state';
         return $this->sendRequest($path, ['regPayNum' => $regPayNum]);
     }
 
@@ -145,7 +143,7 @@ class BaseShop extends Shop
      */
     public function loadUser($login)
     {
-        $path = self::URL . '/user/status';
+        $path = $this->baseUrl . '/user/status';
         $result = $this->sendRequest($path, ['login' => $login]);
         return new User($result);
     }
@@ -162,7 +160,7 @@ class BaseShop extends Shop
      */
     public function refundPayment(string $regPayNum, string $orderId)
     {
-        $path = self::URL . '/provision-services/refund';
+        $path = $this->baseUrl . '/provision-services/refund';
         return $this->sendRequest($path, [
             'regPayNum' => $regPayNum,
             'orderId' => $orderId

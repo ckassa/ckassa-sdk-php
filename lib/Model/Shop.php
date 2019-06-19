@@ -49,7 +49,7 @@ class Shop
      * @param array $data
      * @return string
      */
-    private function getSign(array $data)
+    public function getSign(array $data)
     {
         return strtoupper(md5(strtoupper(md5(implode('&', $data) . '&' . $this->token . '&' . $this->key))));
     }
@@ -58,7 +58,7 @@ class Shop
      * Отправка POST запроса к серверу ShopAPI
      * @param string $path
      * @param array $data
-     * @return mixed
+     * @return array
      */
     public function sendRequest($path, array $data = [])
     {
@@ -73,8 +73,9 @@ class Shop
         curl_setopt( $ch, CURLOPT_SSLCERTPASSWD, $this->certificate->password);
         curl_setopt( $ch, CURLOPT_SSLKEY, $this->certificate->path);
         curl_setopt( $ch, CURLOPT_SSLKEYPASSWD, $this->certificate->password);
-        //curl_setopt($ch, CURLOPT_FAILONERROR, true);
         $response = new Response(curl_exec($ch));
+
+        $info = curl_getinfo($ch);
         $error = curl_error($ch);
         curl_close($ch);
 
@@ -82,9 +83,17 @@ class Shop
             throw new ConnectionException($error);
         }
 
+        if ((int) $info['http_code'] != 200) {
+            throw new ApiException($response->getBody(), $info['http_code']);
+        }
+
         if ($code = $response->getCode())
         {
             throw new ApiException($response->getUserMessage(), $code);
+        }
+
+        if (empty($response->getBody())) {
+            throw new ConnectionException('API вернул неверный ответ');
         }
 
         return json_decode($response->getBody(), true);
