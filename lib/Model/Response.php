@@ -37,7 +37,7 @@ class Response
      * Response constructor.
      * @param string $response
      */
-    public function __construct(string $response)
+    public function __construct($response)
     {
         $this->body = $response;
         $response = json_decode($response, true);

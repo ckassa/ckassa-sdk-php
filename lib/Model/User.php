@@ -18,7 +18,7 @@ use Ckassa\Exceptions\ApiException;
  */
 class User
 {
-    const STATES = ['active', 'inactive', 'disable'];
+    private $states = ['active', 'inactive', 'disable'];
 
     /**
      * @var string Номер телефона
@@ -163,7 +163,7 @@ class User
      */
     public function setState($value)
     {
-        if (in_array($value, self::STATES)) {
+        if (in_array($value, $this->states)) {
             $this->state = $value;
         } else {
             throw new ApiException('Invalid user state');

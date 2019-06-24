@@ -15,7 +15,7 @@ use Ckassa\Exceptions\ApiException;
  */
 class Card
 {
-    const CARD_TYPES = ['undefined', 'visa', 'master_card', 'maestro', 'mir'];
+    private $card_types = ['undefined', 'visa', 'master_card', 'maestro', 'mir'];
 
     /**
      * @var string Маскированый номер
@@ -120,7 +120,7 @@ class Card
      */
     public function setCardType($value)
     {
-        if (in_array($value, self::CARD_TYPES)) {
+        if (in_array($value, $this->card_types)) {
             $this->cardType = $value;
         } else {
             throw new ApiException('Invalid card type');

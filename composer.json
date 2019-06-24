@@ -2,7 +2,7 @@
     "name": "ckassa/ckassa-sdk-php",
     "license": "MIT",
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*"

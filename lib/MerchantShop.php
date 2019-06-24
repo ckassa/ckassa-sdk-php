@@ -101,7 +101,7 @@ class MerchantShop extends BaseShop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function getBalance(string $merchantToken)
+    public function getBalance($merchantToken)
     {
         $path = $this->url . '/get/merchant/wallet/balance';
         return $this->sendRequest($path, ['merchantToken' => $merchantToken]);
@@ -116,7 +116,7 @@ class MerchantShop extends BaseShop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function loadMerchant(string $login)
+    public function loadMerchant($login)
     {
         $path = $this->url . '/merchant/status';
         return new Merchant($this->sendRequest($path, ['login' => $login]));

@@ -25,7 +25,7 @@ class BaseShop extends Shop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function confirmPayment(string $regPayNum, string $orderId, int $amount = 0)
+    public function confirmPayment($regPayNum, $orderId, $amount = 0)
     {
         $path = $this->baseUrl . '/provision-services/confirm';
         return $this->sendRequest($path, [
@@ -89,7 +89,7 @@ class BaseShop extends Shop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function deactivateCard(string $userToken, string $cardToken)
+    public function deactivateCard($userToken, $cardToken)
     {
         $path = $this->baseUrl . '/card/deactivation/';
         return $this->sendRequest($path, ['userToken' => $userToken, 'cardToken' => $cardToken]);
@@ -104,7 +104,7 @@ class BaseShop extends Shop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function getCardsList(string $userToken)
+    public function getCardsList($userToken)
     {
         $path = $this->baseUrl . '/ver2/get/cards';
         $result = $this->sendRequest($path, ['userToken' => $userToken]);
@@ -126,7 +126,7 @@ class BaseShop extends Shop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function getPaymentInfo(string $regPayNum)
+    public function getPaymentInfo($regPayNum)
     {
         $path = $this->baseUrl . '/check/payment/state';
         return $this->sendRequest($path, ['regPayNum' => $regPayNum]);
@@ -158,7 +158,7 @@ class BaseShop extends Shop
      * @throws ApiException
      * @throws ConnectionException
      */
-    public function refundPayment(string $regPayNum, string $orderId)
+    public function refundPayment($regPayNum, $orderId)
     {
         $path = $this->baseUrl . '/provision-services/refund';
         return $this->sendRequest($path, [
