@@ -1,5 +1,5 @@
 {
-    "name": "CKASSA/ckassa-sdk-php",
+    "name": "ckassa/ckassa-sdk-php",
     "license": "MIT",
     "require": {
         "php": ">=5.4",
