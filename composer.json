@@ -1,6 +1,12 @@
 {
     "name": "ckassa/ckassa-sdk-php",
     "license": "MIT",
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
     "autoload": {
         "psr-4": {
             "Ckassa\\": "lib/"
