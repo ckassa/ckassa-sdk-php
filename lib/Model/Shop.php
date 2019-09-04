@@ -45,13 +45,26 @@ class Shop
     }
 
     /**
+     * Producing string for sign for complicated properties of request data
+     * @param array $data
+     * @return string
+     */
+    public function getSignString(array $data) {
+        $result = [];
+        array_walk_recursive($data, function ($entry) use (&$result) {
+            $result[] = $entry;
+        });
+        return implode('&', $result);
+    }
+
+    /**
      * Формирование подписи к запросу
      * @param array $data
      * @return string
      */
     public function getSign(array $data)
     {
-        return strtoupper(md5(strtoupper(md5(implode('&', $data) . '&' . $this->token . '&' . $this->key))));
+        return strtoupper(md5(strtoupper(md5($this->getSignString($data) . '&' . $this->token . '&' . $this->key))));
     }
 
     /**
