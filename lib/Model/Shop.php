@@ -45,8 +45,9 @@ class Shop
     }
 
     /**
-     * Producing string for sign for complicated properties of request data
+     * Подготовка массива данных для формирования подписи
      * @param array $data
+     *
      * @return string
      */
     public function getSignString(array $data) {
