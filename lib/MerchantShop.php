@@ -133,7 +133,7 @@ class MerchantShop extends BaseShop
      */
     private function prepareCreateMerchantData($data)
     {
-        $data = DataHelper::transfigureData([
+        return DataHelper::transfigureData([
             'phone',
             'email',
             'name',
@@ -143,12 +143,6 @@ class MerchantShop extends BaseShop
             'region',
             'docList'
         ], $data);
-        if (isset($data['docList'])) {
-            foreach ($data['docList'] as $key => $item) {
-                $data['docList'][$key] = DataHelper::transfigureData(['type','number'], $item);
-            }
-        }
-        return $data;
     }
 
     /**
