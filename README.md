@@ -1,6 +1,6 @@
 # Ckassa ShopAPI PHP SDK
-Клиент для работы с Ckassa ShopAPI
-<a href="https://cabinet.ckassa.ru/doc">Документация</a>
+Клиент для работы с Ckassa ShopAPI. 
+<a href="https://cabinet.ckassa.ru/doc">Полная документация</a>
 
 ### Установка
 
