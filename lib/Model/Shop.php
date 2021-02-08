@@ -53,7 +53,11 @@ class Shop
     public function getSignString(array $data) {
         $result = [];
         array_walk_recursive($data, function ($entry) use (&$result) {
-            $result[] = $entry;
+            if (is_bool($entry)) {
+                $result[] = $entry ? 'true' : 'false';
+            } else {
+                $result[] = $entry;
+            }
         });
         return implode('&', $result);
     }
